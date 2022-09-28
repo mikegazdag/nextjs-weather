@@ -4,12 +4,13 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      // "@/components/*": ["components/*"],
+      "@/components/*": ["components/*"],
       "@/contexts/*": ["contexts/*"],
       "@/hooks/*": ["hooks/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
-      // "@/utils/*": ["utils/*"]
+      "@/reducers/*": ["reducers/*"],
+      "@/styles/*": ["styles/*"],
+      "@/utils/*": ["utils/*"]
     }
   },
   "exclude": ["node_modules", ".next"]

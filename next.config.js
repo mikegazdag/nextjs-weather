@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+module.exports = {
   reactStrictMode: true,
   swcMinify: true,
-}
 
-module.exports = nextConfig
+  eslint: {
+    dirs: ['reducers', 'utils', 'contexts', 'hooks'], // Custom folders
+  },
+};

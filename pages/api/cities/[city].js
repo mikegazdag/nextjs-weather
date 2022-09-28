@@ -8,41 +8,24 @@ export default async function handler(req, res) {
     case 'GET': {
       const { city } = query;
 
-      if (!city) res.status(202).json({ message: 'City is missing' });
+      if (!city) res.status(202).json({ message: '"city" is missing' });
 
       try {
         const payload = qs.stringify({
-          lang: 'en',
-          limit: 10,
-          type: 'city',
-          apiKey: process.env.GEOAPIFY_API_KEY,
-          text: city.trim(),
+          sort: 'population',
+          type: 'like',
+          appid: process.env.OPEN_WEATHER_MAP_API_KEY,
+          q: city.trim(),
         });
 
-        console.log('payload', payload);
-        const url = `https://api.geoapify.com/v1/geocode/search?${payload}`;
+        const url = `https://api.openweathermap.org/data/2.5/find?${payload}`;
+
         const { data } = await axios.get(url);
 
-        console.log('data', data);
-        return res.status(202);
+        return res.status(202).json(data?.list);
       } catch (error) {
-        return res.status(200);
+        return res.status(500).json({ message: 'Error fetching content' });
       }
-
-      //   // const result = sourceCity.filter(sourceCity.name === city);
-      //   if (sourceCity.name !== city) return false;
-      //   console.log('result', sourceCity);
-      //   // if (city.filter(city.name === city)) {
-      //   //   return res.status(200).json(city);
-      //   // }
-      // });
-
-      // return res.status(500).json({ message: 'City not found' });
-      // } else {
-      //   res.status(400).json({ message: 'Error fetching content' });
-      // }
-
-      break;
     }
 
     default:
