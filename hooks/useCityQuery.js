@@ -1,15 +1,20 @@
 import axios from 'axios';
 
 export function useCityQuery() {
-  const getCity = async ({ city }) => {
-    if (!city) throw new Error('City must be provided');
+  const findCity = async query => {
+    if (!query) throw new Error('City must be provided');
 
-    return await axios
-      .get(`/api/cities/${city}`)
-      .then(response => response.data);
+    try {
+      const response = await axios.get(`/api/cities/${query}`);
+      const { data } = response;
+
+      return data;
+    } catch (error) {
+      console.error('error fetching city query');
+    }
   };
 
   return {
-    getCity,
+    findCity,
   };
 }

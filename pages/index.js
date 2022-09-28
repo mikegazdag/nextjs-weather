@@ -1,32 +1,55 @@
 import cn from 'classnames';
-import { cities } from 'country-city-location';
 import debounce from 'lodash/fp/debounce';
 import Head from 'next/head';
 import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 
+import { Results } from '@/components/partial/Results';
 import { useApp } from '@/contexts/AppContext';
 import { useCityQuery } from '@/hooks/useCityQuery';
 
 export default function Home() {
-  const { setQuery, weather, isLoading, setIsLoading } = useApp();
-  const { getCity } = useCityQuery();
+  const {
+    setQuery,
+    weather,
+    isLoading,
+    setIsLoading,
+    queryResults,
+    setQueryResults,
+    appState,
+  } = useApp();
+  const { findCity } = useCityQuery();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { appDispatch } = useApp();
 
   const handleQuery = async event => {
     event.preventDefault;
-    // const q = event?.target?.value;
-    // console.log('event?.target?.value', q);
-    // console.log('cities', cities);
-    // const result = cities.filter(sourceCity => sourceCity.name === q);
-    // console.log('results2', result);
-    setIsLoading(true);
-    setQuery(event?.target?.value);
-    const response = await getCity({ city: event?.target?.value });
+    const { query } = event;
+    console.log('1 input value', query);
 
-    console.log('response', response);
+    appDispatch({ type: 'SUBMITTING' }, { data: query });
+    setIsLoading(true);
+    setQuery(query);
+
+    try {
+      const results = await findCity(query);
+      setQueryResults(results);
+    } catch (error) {
+      appDispatch({ type: 'RESET' });
+      // setIsLoading(false);
+      setQuery(null);
+    }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedQuery = useMemo(() => debounce(300, handleQuery));
+  const providerName = 'OpenWeatherMap';
+
+  const isProcessing = appState.disabled || appState.submitting;
 
   return (
     <>
@@ -38,32 +61,39 @@ export default function Home() {
 
       <section>
         <header
-          className={cn('bg-slate-800', {
+          className={cn('bg-slate-800/90', {
             'h-screen items-center flex': !weather,
             'py-32': weather,
           })}
         >
           <div className="container">
-            <h1 className="hs--h1 mb-2.5">Mike's Weather</h1>
+            <h1 className="mb-5 hs--h1">Mike's Weather</h1>
 
-            <div>
+            <form id="query" onSubmit={handleSubmit(debouncedQuery)}>
               <div className="form-control">
                 <div className="input-group">
                   <input
                     type="text"
+                    name="query"
                     placeholder="Enter a city"
-                    onChange={debouncedQuery}
-                    disabled={isLoading}
-                    className={cn('w-full max-w-xs input input-bordered', {
-                      'input-disabled': isLoading,
-                    })}
+                    disabled={appState.disabled}
+                    {...register('query', { required: true })}
+                    // onChange={debounce(300, handleQuery)}
+                    className={cn(
+                      'w-full max-w-xs input input-bordered text-lg',
+                      {
+                        'input-disabled': isProcessing,
+                      },
+                    )}
                   />
                   <button
                     className={cn('btn btn-square', {
-                      loading: isLoading,
+                      loading: isProcessing,
                     })}
+                    type="submit"
+                    onClick={debouncedQuery}
                   >
-                    {!isLoading && (
+                    {!isProcessing && (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-6 h-6"
@@ -82,12 +112,14 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-            </div>
-            <p>
-              <small>Powered by Weatherbit</small>
+            </form>
+            <p className="mt-1.5 ml-0.5">
+              <small>Powered by {providerName}</small>
             </p>
           </div>
         </header>
+
+        {queryResults && <Results />}
 
         {weather && (
           <>
