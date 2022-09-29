@@ -6,6 +6,10 @@
   html {
     @apply text-white antialiased;
   }
+
+  body {
+    @apply bg-[#F4F6F9];
+  }
 }
 
 @layer base {
@@ -29,5 +33,22 @@
       @apply text-4xl leading-8;
       @apply md:text-4xl md:leading-10 md:tracking-tighter;
     }
+  }
+}
+
+@layer utilities {
+  .bg-header {
+    background: linear-gradient(
+      180deg,
+      #132043 0%,
+      #233b79 14.58%,
+      #233b79 69.79%,
+      rgba(35, 59, 121, 0.65) 88.54%,
+      rgba(255, 255, 255, 0.39) 97.92%
+    );
+  }
+
+  .badge {
+    @apply text-white font-bold text-sm p-2 bg-[#457AFF] border-[#457AFF] uppercase;
   }
 }

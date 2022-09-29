@@ -1,0 +1,1 @@
+export { convertToCelsius } from './temperature';

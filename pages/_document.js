@@ -8,7 +8,6 @@ export default class MyDocument extends Document {
           {process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production' && (
             <meta name="robots" content="noindex" />
           )}
-
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
@@ -16,10 +15,9 @@ export default class MyDocument extends Document {
             crossOrigin=""
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Mulish:wght@400..850&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&League+Gothic&family=Mulish:wght@1000&display=swap"
             rel="stylesheet"
-          />
-
+          ></link>
           {/*
           <meta name="description" content="TBD..." />
           */}

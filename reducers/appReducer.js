@@ -19,24 +19,12 @@ export const appReducer = (state, action) => {
         view: VIEWS.INPUT,
       };
 
-    // case ACTIONS.FOCUS:
-    //   return {
-    //     ...state,
-    //     focus: true,
-    //   };
-
-    // case ACTIONS.RESULTS:
-    //   return {
-    //     ...state,
-    //     view: REDUCER_VIEWS.RESULTS,
-    //   };
-
-    // case ACTIONS.SET_ERROR:
-    //   return {
-    //     disabled: false,
-    //     submitting: false,
-    //     errors: action.errors,
-    //   };
+    case ACTIONS.RESULTS:
+      return {
+        submitting: false,
+        disabled: false,
+        view: VIEWS.RESULTS,
+      };
 
     default:
       return REDUCER_INITIAL_STATE;

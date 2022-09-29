@@ -10,10 +10,13 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Mulish', 'sans-serif'],
+      sans: ['Syne', 'sans-serif'],
+      wordMark: ['Mulish', 'sans-serif'],
       mono: 'monospace',
       defaultSans:
         "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+      heading: "'League Gothic', serif",
+      syne: 'Syne, serif',
     },
     extend: {},
   },

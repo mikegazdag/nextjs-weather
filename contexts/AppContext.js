@@ -9,7 +9,6 @@ export function AppProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [queryResults, setQueryResults] = useState(null);
-  const [weather, setWeather] = useState(false);
 
   const [appState, appDispatch] = useReducer(appReducer, REDUCER_INITIAL_STATE);
 
@@ -22,8 +21,6 @@ export function AppProvider({ children }) {
         setQuery,
         queryResults,
         setQueryResults,
-        weather,
-        setWeather,
         isLoading,
         setIsLoading,
       }}
