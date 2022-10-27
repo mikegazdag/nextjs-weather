@@ -19,10 +19,13 @@ export default async function handler(req, res) {
         });
 
         const url = `https://api.openweathermap.org/data/2.5/find?${payload}`;
-
         const { data } = await axios.get(url);
 
-        return res.status(202).json(data?.list);
+        if (data?.count >= 1) {
+          return res.status(202).json(data?.list);
+        } else {
+          return res.status(404).end();
+        }
       } catch (error) {
         return res.status(500).json({ message: 'Error fetching content' });
       }

@@ -16,7 +16,6 @@ export const appReducer = (state, action) => {
     case ACTIONS.RESET:
       return {
         ...REDUCER_INITIAL_STATE,
-        view: VIEWS.INPUT,
       };
 
     case ACTIONS.RESULTS:
@@ -24,6 +23,12 @@ export const appReducer = (state, action) => {
         submitting: false,
         disabled: false,
         view: VIEWS.RESULTS,
+      };
+
+    case ACTIONS.SET_ERROR:
+      return {
+        ...state,
+        error: state.error,
       };
 
     default:

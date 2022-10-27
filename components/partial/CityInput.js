@@ -9,8 +9,7 @@ import { useCityQuery } from '@/hooks/useCityQuery';
 import { REDUCER_ACTIONS as ACTIONS } from '@/utils/constants';
 
 export const CityInput = () => {
-  const { setQuery, setIsLoading, setQueryResults, appState, appDispatch } =
-    useApp();
+  const { setQuery, appState, appDispatch } = useApp();
   const { findCity } = useCityQuery();
   const {
     register,
@@ -26,20 +25,15 @@ export const CityInput = () => {
   const handleQuery = async event => {
     event.preventDefault;
     const { query } = event;
-    console.log('1 input value', query);
+    if (!query) return null;
 
-    appDispatch({ type: ACTIONS.SUBMITTING });
-    setIsLoading(true);
     setQuery(query);
+    appDispatch({ type: ACTIONS.SUBMITTING });
 
     try {
-      const results = await findCity(query);
-      setQueryResults(results);
-      appDispatch({ type: ACTIONS.RESULTS });
+      await findCity(query);
     } catch (error) {
-      appDispatch({ type: ACTIONS.RESET });
-      // setIsLoading(false);
-      setQuery(null);
+      appDispatch({ type: ACTIONS.ERROR, errors: error });
     }
   };
 
@@ -52,7 +46,7 @@ export const CityInput = () => {
   return (
     <>
       <form id="query" onSubmit={handleSubmit(debouncedQuery)}>
-        <div className="md:max-w-md form-control">
+        <div className="mx-auto md:max-w-md form-control">
           <div className="input-group">
             <input
               type="text"

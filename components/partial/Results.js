@@ -4,7 +4,6 @@ import { Card } from '../base/Card';
 
 export const Results = () => {
   const { queryResults } = useApp();
-  if (!queryResults) return null;
 
   return (
     <>

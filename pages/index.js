@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 import { AppLogo } from '@/components/base/AppLogo';
 import { CityInput } from '@/components/partial/CityInput';
@@ -9,6 +10,9 @@ import { REDUCER_VIEWS } from '@/utils/constants';
 export default function Home() {
   const { appState } = useApp();
 
+  useEffect(() => {
+    console.log('appState.view ', appState.view);
+  });
   return (
     <>
       <Head>

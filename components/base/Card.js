@@ -1,7 +1,6 @@
 import { convertToCelsius } from '@/utils/helpers';
 
 export const Card = ({ props }) => {
-  console.log('prop', props);
   const { name, main, wind, snow, rain, sys } = props;
 
   const country = sys?.country;
@@ -12,7 +11,6 @@ export const Card = ({ props }) => {
     feels: main?.feels_like,
   };
 
-  console.log('temp', temp.wind, temp.snow, temp.rain, country);
   return (
     <>
       <article className="grid items-center w-3/4 col-span-3 row-span-3 gap-4 bg-[#E8ECF6] shadow text-[#0B1C46] rounded-tr-md rounded-bl-md rounded-tl-[1.75rem] rounded-br-[1.75rem] max-w-xl">
